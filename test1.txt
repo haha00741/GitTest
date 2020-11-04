@@ -1,4 +1,4 @@
-ÕâÊÇÒ»¸ö²âÊÔÎÄ¼þ
+﻿ÕâÊÇÒ»¸ö²âÊÔÎÄ¼þ
 this is a test file
 
 aaaa~ branch test
@@ -7,3 +7,4 @@ bbbb~ branch test2222
 onclick1
 onclick2
 onclick3
+4444444
