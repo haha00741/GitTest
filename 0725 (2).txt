@@ -1,0 +1,341 @@
+1.泛型 C#
+	list dic 都是泛型的类, GameObject.GetComponent<Test>() 无参数， 返回Test类型对象
+	写法 private T getData<T>() where T:GameObject,    [  new() ] 约束，在函数中可以new
+
+2.Tag Unity 标签的用法 动态寻找游戏别的物体
+	GameObject.Find("aa") 参数为标签类型 比较耗
+	GameObject.FindGameObjectWithTag("monster") 参数为标签类型  返回单个对象
+	GameObject.FindGameObjectsWithTag("monster") 参数为标签类型 返回数组对象
+	一般和预制体组合使用 预制体的tag是已经存在的
+
+3.定时器 C#
+	Time.deltaTime() 返回float 每执行一帧程序消耗的时间
+	void Update()
+	{
+		time += Time.deltaTime();  // deltaTime 加到1.0f 为1秒
+
+		if (time >= 3.0f)
+			return;
+	}
+
+4.MeshRenderer Unity 网格渲染器 控制物体的渲染 取消组件勾选后不在游戏渲染
+
+5.脚本中的gameObject是主物体 物体处于activeSelf == false 的时候 所有组件失效
+	gameObject.SetActive(true) 物体是否激活
+	gameObject.renderer.enable = false 物体的renderer组件是否激活
+	gameObject.activeSelf  自己是否激活
+
+6.C#不支持多继承,继承需要接口 interface
+	父类
+		函数加virtual, public 或者 protected的函数可以被重写
+		函数加abstract 纯虚函数 必须在子类被重写,有纯虚函数的类为抽象类(类也需要加abstract),不可以实例化对象
+
+	子类
+		使用override 关键字 表示重写父类函数
+		base.fn() 调用父类的虚函数
+
+	父类类型new子类 实际对象为子类类型 为多态
+
+7.rigidbody unity 刚体   勾选use gravity使用重力 一般是用在发起碰撞的物体(玩家)
+
+8.box collider 盒子碰撞器 
+	is Trigger 是否触发器 勾选后不会发生碰撞的表现,但会调用到 OnTriggerEnter() 回调, 不会调用到 OnColliderEnter() 回调
+
+
+碰撞的前提条件: 两个物体至少有一个有发起碰撞的组件;两个都得有碰撞器
+
+9.Void OncollisionEnter(Collision collision) //碰撞开始 回调 调用一次
+	Void OncollisionStay(Collision collision) //碰撞逗留 回调 多次
+	Void OncollisionExit(Collision collision) //碰撞退出 回调 一次
+
+	collision.gameObject 碰撞到的物体
+	collision.relativeVelocity 碰撞的线性速度
+	collision.contacts 碰撞的多个顶点
+	collision.collider 碰撞的碰撞器
+
+10.transform.LookAt(obj.transform) 看向obj
+	transform.Translate(Vector3.forward * 0.1f) 平移 
+	Vector3.Distance(transform.position, obj.transform.position) 返回float
+
+
+
+1.animation.AddClip( Clip, "game" );  	-- 增加clip  key为game  clip 为 AnimationClip类型的对象
+  animation.CrossFade( "game" , 1.0f); 	-- 平缓过渡播放game的动画，比play消耗多一点 参数2 时间
+
+2.射线
+(1) ngui 的按钮检测原理就是用的射线
+(2) C#的引用传递 需要在  调用和接受都加 ref 或 out 
+	1. out 可以传递未初始化的变量做参数  ref不行
+	2. out 在函数结束之前必须对变量赋值  ref不用
+(3) Input.GetMouseButtonDown(0) 	-- 鼠标左键点下 
+(4) Input.mousePosition 屏幕坐标 2维的
+(5)  Ray ray = Camera.main.ScreenPointToRay() 	屏幕坐标转射线  返回 Ray类型对象
+	Debug.DrawRay( ray.origin, ray.direction * 10.0f ); 	-- 绘制射线  起点(vector3类型)  方向(vector3类型)
+(6)  RaycastHit hit; 	-- 射线碰撞物体
+Physics.Raycast( ray, out hit, 10.0f )   	-- 是否碰撞 并且赋给 hit
+ hir.collider.tag.Equals( "Monster")
+
+
+
+
+0726
+1. world space 世界坐标系
+transform.position 获得在世界中的位置
+); 		-- 获取当前物体在terrain的位置的高度  返回float
+
+2.local space 本地坐标系
+transform.localPosition 本地坐标系
+
+3.screen space 屏幕坐标系
+左下角( 0,0 )  右上角( Screen.width, Screen.height )
+z的位置是相机的世界坐标的z值
+
+4.viewport space 视口坐标系
+左下为( 0,0 ) 右上角为 ( 1, 1 )
+
+5.UI space UI的坐标系
+左上  0,0    右下   screen.width, screen.height
+
+6. Application.LoadLevel( name )
+   Application.LoadLevel( level )
+
+7.  Invoke( 函数名， 时间 )
+  InvokeReapting(函数名， 开始时间， 间隔时间）
+  DontDestroyOnLoad(gameObject)
+  Destroy(gameObject)
+8.  Vector3.MoveToward( currentposition, targetposition, 1次距离(float) )  返回vector3
+9. 	Terrain.activeTerrain.SampleHeight (transform.position
+
+0727
+LineRender lr;
+lr.StartColor = Color.Red;
+lr.EndColor = Color.Yellow;
+lr.SetVertixsCount(3);
+lr.SetPosition( 0, transform.position);
+lr.SetPosition( 1, t.transform.position);
+lr.SetPosition( 2, t2.transform.position);
+
+
+0729
+1.	const 声明的时候必须赋值
+	readonly 可以在构造函数赋值
+	
+2.list 结构在删除元素后会自动向前进
+	Remove(元素) 
+	RemoveAt(下标)
+
+3.animator 
+	layer 为层  多个layer叠加可强制实现多个动画一起播放
+	parameters  设置 flag  4个类型  int  float bool trigger
+	
+	avatar  匹配avatar关节
+	apply root motion  使用动画默认位移
+	
+	set( )  SetInteger setBool 参数1为 设置好的flag string类型   参数2为值 即可播放
+
+
+0801
+1. Edit-> Project Settings-> Input->
+	(1) Horizontal Vertical 两个轴
+		Input.GetAxis("Horizontal") 获取水平轴  Input.GetAxis("Vertical") 获得纵轴 
+		取值在  -1 到 1 之间
+		type 有三个 key  mouseX  或者joystick
+	(2)	Fire 开火
+		用 Input.GetMouse("Fire1") 获得 返回bool
+
+2. 	Update 		每帧一次 	掉帧 单位时间不少
+ 	FixedUpdate 渲染帧执行  掉帧 单位时间次数变少
+ 	LateUpdate 	在FixedUpdate过后执行  不会出现逻辑和画面脱节的问题 如 摄像机跟随一般写在这里
+
+3.  Physics.Linecast(start, end, layer)
+	layer 为  1 左移层数
+
+
+0804
+1. vector3.dot  点乘    a·b·cosθ  	a在b上的投影长度
+	vector3.cross  叉乘  a·b·sinθ  	a和b形成的平面的法线
+	quaternion.fromtorotation(a, b ) 	a 旋转到b
+	四元数乘 vector3 得到 类型vector3的返回值
+	hit的 normallize 是点的法线
+	v3.normallize  是规范化取方向
+	v3.magnitude   是归一化 去数值
+	
+
+0805 
+1. is 可以用来判断 父类指针是否指向子类对象
+	class A{
+
+	}
+
+	object o = new object();
+	if (o is A )
+	{
+		return true;
+	}
+	
+2. 	object 	是c#提供的  所有类的父类
+	Object 	是unity的对象
+
+3.  fn(params object[] objs)
+	{
+		Debug.Log("123");
+	}
+
+	params 关键字 函数参数不确定时可用
+	用法 ： fn(a, b, c)
+	接受 ：params object[] objs  然后 objs[0] objs[1]  
+
+4.  强转引用数据类型用as   强化基本类型(int/float等)用 (int)
+5. 	typeof(int)  	参数为类型名  输出为  System.Int32
+ 	int c = 100;   c.GetType() 获取对象的类型
+
+6.	类里面可以声明类
+
+7. 老版动画 animation 在同脚本里可直接用animation组件 不需要获取
+	animation["GG"]  可得到叫GG的动画
+
+
+8. 	animation.Play("111"); 	
+ 	animation.Play("222"); 	 会覆盖第一个
+
+ 	animation.PlayQueued("111"); 	
+ 	animation.PlayQueued("222"); 	队列 第一个播完开始第二个 参数2为 QueueMode枚举
+ 	CrossFadeQueued 同理
+
+9.  AnimationState a = animation["GG"];   类型为AnimationState
+	a.layer = 1; 	 层
+	a.speed = 2.0f; 	速度
+	a.time; 		当前播放时长
+	a.length;   	动画长度
+	a.enabled; 		是否播放
+	a.weight; 		权重
+
+10. AnimationEvent ae = new AnimationEvent();
+	ae.time = a.length / 2;
+	ae.functionName = "fn";
+	ae.intParameter = 200;
+	AnimationClip clip = animation.GetClip("GG");
+	clip.AddEvent(ae);
+
+11. u3d模型  fbx格式的 sdk最多 最方便 最安全 免费 用的人 多  跨平台性好 数据保存完整
+	预制体使用前 最好放进空物体， 不然容易出现自己坐标系和世界坐标系混乱的问题
+
+
+0808
+1.	animation 	老版动画 效果不如animator 比较省 一般用于UI
+	animator 	新版动画 效果好 一般是角色动画 更耗一点
+
+2.  切动画：点+号新建动画，找数据文件，根据里面显示的帧的区间，设置出不同的动画
+3.	SendMessage("fn", object param) 	 可调用绑定在物体上所有脚本的函数  同名函数所有都会调到
+	SendMessageUpwards("fn") 	 调用父节点的函数
+	BroadCastMessage("fn") 		 调用子节点的函数
+
+4. 	PlayerPrefs 存储类
+ 	PlayerPrefs.HasKey("username")   是否有key为username的
+ 	PlayerPrefs.SetString("username", "123")  存username为123
+ 	PlayerPrefs.GetString("username")  取username
+
+5.  TextAsset  Unity的类, 支持直接加载CSV类型的文件
+	储存在  regedit 的 HKEY_CURRENT_USER\Software\Unity\UnityEditor\DefaultCompany 的项目文件下
+	
+
+0809
+Text Text0809 Text08091 Text08092														
+
+0810
+1. 	解析json的时候  用StringBuilder 代替 string  因为　"11"+ "22" 的方式会频繁的释放+声明
+xml解析
+
+0811
+1. 	携程
+	Start(){
+		--	调用
+		StartCoroutine(fn() ); 	-- 只能用 StopAllCoroutine() 停止
+
+		-- 另一种方式
+		StartCoroutine("fn"); 	-- 可以用 StopCoroutine("fn") 或 StopAllCoroutine() 停止 
+	}
+	
+	void fn()
+	{
+	 	--挂起
+		yield return new WaitForSeconds(3.0f);
+		-- yield return 3654645 == yield return 0  ==  yield return null  延迟一帧
+		-- yield return new WaitForFixedUpdate(); 		-- FixedUpdate后执行
+		-- yield return new WaitForEndOfFrame(); 		-- 每帧结束后执行
+
+
+		-- 3秒以后会回来
+		Debug.log("3秒以后");
+	}
+2 	携程默认在Update后执行
+
+3 	携程挂携程， 会在子携程结束后再继续父携程
+	携程不是多线程，而是时间分割策略
+
+4. 	AsyncOperation 接受一步加载场景的类 (LoadSceneAsync())
+	allowSceneActivation 	 是否加载完立即切场景
+	isDown  是否结束 	false
+	progress 进度 		0 - 1
+
+
+0815
+1. 	UIRoot控制缩放  不同分辨率下导致的UI适应问题
+	缩放模式{
+		1. PixelPerfect 以像素为基准 只是一直保持UI清晰 		适用于PC端
+		2. FixedSize  以比例为基准 不管设备实际的屏幕多大 永远保持占据屏幕的比例大小  用于移动端
+	}
+	用于适配分辨率
+	
+	float standard_Width = 320f;
+	float standard_Height = 480f;
+	float device_Width = 0f;
+	float device_Height = 0f;
+
+	void Awake(){
+		device_Width = Screen.width;
+		device_Height = Screen.height;
+		a();
+	}
+
+	void a(){
+		float rate = 0f;
+		float standrate = standard_Width / standard_Height;
+		float devicerate = device_Width / device_Height;
+		if (devicerate < standrate)
+		{
+			rate = standrate / devicerate;
+			camera.orthographicSize = rate;
+		}
+	} 	-- 设备宽高比不规范时，手动改变摄像机的size使游戏画面适配屏幕
+
+2. 	UIPanel
+	用于管理UI组件
+3.	UICamera
+	用于出发所有的UI事件
+
+4. 	Camera 发送给Collider的事件
+	OnHover(IsHover) 	发送时机为鼠标悬停或离开collider
+	OnPress(IsDown) 	按下触发
+	OnSelect(Selected) 	鼠标点击和松开的时候在同一个Collider上
+	OnClick() 			和select一样  区别在于松开时的偏移限度大一点
+	OnDoubleClick() 	在四分之一秒内Click两次时
+	UICamera.currentTouchID 代表按下哪个键
+	OnDragStart() 		开始拖拽时
+	OnDrag(Delta) 		拖拽中的每一帧 	参数：偏移了多少
+	OnDragEnd() 		拖拽到结束
+	OnDragOver(DragObject)拖拽到格子里 	参数：拖拽的object
+	OnDragOut(DragObject) 拖拽出格子 	参数：拖拽的object
+	OnInput(text) 		选择一个collider后输入时
+	OnToolTip(show) 	rollOver   UICamera中的ToolTipDelay控制延迟时间
+	OnScroll(delta) 	鼠标滚轮滚动
+	OnKey(KeyCode Key) 	 键盘或者控制器被使用时
+
+0816
+1.	Widget  是继承的父类  有 锚点/颜色/层级属性
+2.	sprite不放进图集没法使用   除非放在texture用
+3.	图集是unity提供的 减少drawcall的 方法
+4.	第一种 在button上绑脚本 脚本上重写OnClick 就可调用
+	第二种 用 UIButton message  参数： target实现回调接口的类  FunctionName接口名字  Trigger实现方式
+	第三种 
+	
