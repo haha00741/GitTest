@@ -337,5 +337,6 @@ xml解析
 3.	图集是unity提供的 减少drawcall的 方法
 4.	第一种 在button上绑脚本 脚本上重写OnClick 就可调用
 	第二种 用 UIButton message  参数： target实现回调接口的类  FunctionName接口名字  Trigger实现方式
-	第三种 
+	第三种  UIListoner.Get(btn).OnClick = fn  (fn为类里的函数, 参数为 GameObject btn);
+	第四种 	UIButton脚本上的 Notify , Notify是GameObject,可使用任意子脚本的函数, 函数需要为public, 并且无参数 
 	
