@@ -343,7 +343,11 @@ xml解析
 
 0817
 1. 	:)笑脸表情  label 勾选 Encoding [b][/b] 加粗   [sup][/sup] 次方  [sub][/sub] 对数    [s][/s] 中横线   [ffffff]aaa[-] 颜色
-2. 	
+2. 	panel clip方式  alpha clip 和 soft clip 会切割漏在外面的部分  类似flash 的遮罩
+3. 	Grid 组 可以按名字里的数字序号排序  间距和大小
+4.	动画 ctrl+6  可以选择UI节点
+5.	label.GetURLAtPosition( UICamera.lasthit.point ) 获得点击的label的url( 需用[url][/url]方式写的 ) Application.OpenURL(url)打开
+6.	UILabel  直接加 BoxCollider 然后就可以写OnClick回调并且可以成功调用
 
 
 
