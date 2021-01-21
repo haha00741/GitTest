@@ -337,7 +337,7 @@ xml解析
 3.	图集是unity提供的 减少drawcall的 方法
 4.	第一种 在button上绑脚本 脚本上重写OnClick 就可调用
 	第二种 用 UIButton message  参数： target实现回调接口的类  FunctionName接口名字  Trigger实现方式
-	第三种  UIListoner.Get(btn).OnClick = fn  (fn为类里的函数, 参数为 GameObject btn);
+	第三种  UIListoner.Get(btn).OnClick = fn  (fn为类里的函数名, 参数为 GameObject btn);
 	第四种 	UIButton脚本上的 Notify , Notify是GameObject,可使用任意子脚本的函数, 函数需要为public, 并且无参数 
 	
 
@@ -349,6 +349,30 @@ xml解析
 5.	label.GetURLAtPosition( UICamera.lasthit.point ) 获得点击的label的url( 需用[url][/url]方式写的 ) Application.OpenURL(url)打开
 6.	UILabel  直接加 BoxCollider 然后就可以写OnClick回调并且可以成功调用
 
-
-
+0818
+1.	grid  达到最大行/列时, 会把多的数据自动开启新的 列/行
+2.	Image Button 和普通button 的区别： 四种状态是四张图片，而非颜色
+3.	NGUI有  Attach -> collider 可以添加自动对齐button的collider
+4.	sprite.spriteName = "picName";  即可切换同图集的图片
+5.	《UIInput》 的 StartingValue 优先于 label 的默认内容显示
+	Save As 以填入的值作为KEY  文本框的值作为value  存储在Prefab里
+	Input框运行时  label下动态生成  input caret 输入光标  input Highlight 选中高亮   两个
+	在Input框 focus状态时结束运行会报错(input caret 和 input Highlight)，是因为没有删除选中高亮和输入光标的原因，实际打包后不会影响，如果走正常结束游戏，
+	需要先关闭输入框，不会报错，如果强制杀进程则无需担心报错
+	Input Type  Standard普通  password输入会显示为*
+	KeyBoard Type  一般不用
+	Validation 类型显示   interger 只能输入int  等
+	CharacterLimit 字符限制
+6.	input.onSubmit.Add(new EventDelegate( this, "OnSubmit" ));  输入框回车时回调  可Add多个    submit：提交
+	input.onChange.Add(new EventDelegate( this, "OnChange111" ));  输入框内容变化时回调  可Add多个
+	input.label.text 获得内容数据
+7.	UIToggle scale控制缩放  变色
+	toggle.value 	 bool  true为选中 false为非选中
+	
+	
+	
+	
+	
+	
+	
 	
