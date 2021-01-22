@@ -343,7 +343,7 @@ xml解析
 
 0817
 1. 	:)笑脸表情  label 勾选 Encoding [b][/b] 加粗   [sup][/sup] 次方  [sub][/sub] 对数    [s][/s] 中横线   [ffffff]aaa[-] 颜色
-2. 	panel clip方式  alpha clip 和 soft clip 会切割漏在外面的部分  类似flash 的遮罩
+2. 	panel clip方式  alpha clip 和 soft clip 会切割漏在外面的部分  类似flash 的遮罩 
 3. 	Grid 组 可以按名字里的数字序号排序  间距和大小
 4.	动画 ctrl+6  可以选择UI节点
 5.	label.GetURLAtPosition( UICamera.lasthit.point ) 获得点击的label的url( 需用[url][/url]方式写的 ) Application.OpenURL(url)打开
@@ -369,10 +369,18 @@ xml解析
 7.	UIToggle scale控制缩放  变色
 	toggle.value 	 bool  true为选中 false为非选中
 	
-	
-	
-	
-	
-	
+0819
+1.	老版UIAnchor 是以空物体为父节点，然后计算anchor的坐标来控制位置  container的参数是基点 side 是位置
+	新版的是直接在父类里，默认被继承， 直接使用就可以   target是基点  上下左右是自己的上下左右 = 选择的基点的参照位置 + 偏移值
+2. 模型显示在UI里   流程是 把MainCamera拍到的画面 赋给一个 RenderTexture  然后把这个RenderTexture 赋给用来 显示的Texture的参数
+	(1)UIRoot 的layer调整为UI  UICamera的layer调整为只拍摄UI  MainCamera 调整为只拍摄(culling mast)Avatar层
+	(2)新建一个 RenderTexture 赋给MainCamera的TargetTexture（清晰度用RenderTexture里的size参数调整）
+	(3)把RenderTexture赋给 用来显示的UITexture的texture参数
+3.	string.IsNullOrEmpty() 是否为空
+4. 	UICamera只能存在一个  如果需要多个UIRoot 把UIRoot下面的子节点Camera改为同级即可同时存在多个UIRoot
+5.	任何界面都是建立在UIPanel的基础上，才能渲染
+6.	做好UI，build成预制体，然后game去加载
+7.	SetActive或Instatiant 要区分
+
 	
 	
