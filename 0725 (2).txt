@@ -427,11 +427,188 @@ xml解析
     2.包含未实现的方法声明
     3.接口的所有成员都是抽象的(抽象的必须重写)
     接口是一种约定，保证实现接口的类或者结构在形式上保持一致
-    
-  
-  
-  
-  
-  
+   
+   
+   
+   
+   
+ {
+ 	2021.03.14C#笔记
+	1.
+	1.C#代码首先通过C#编译器编译成公共中间语言（CIL）。
+	然后CIL再由虚拟执行系统（运行时）编译成机器码并开始执行。
+	2.CLI包含的规范有：
+		虚拟执行系统（VES，运行时）
+		公共中间语言（CIL）
+		公共类型系统（Common Type System，CTS）
+		公共语言规范（Common Language Specification，CLS）
+		元数据（Metadata）
+		框架（Framework）
+	3.支持多种语言。CIL不只是C#的中间语言，还有可能是Java、C++等的中间语言，只是各由不同的编译器编译成CIL。这个特点实现了CLI支持多种语言在同一个	应用程序内的交互，允许使用多种语言来编写同一个程序，并允许用一种语言	写的代码访问另一种语言写的库。
+
+	托管机制。运行时将CIL转换成机器码并开始执行时，它还在继续管理代码，这样的代码称为托管代码，执行过程称为托管执行。在托管执行中，CLI平台可以对程序进行一些附加服务，比如垃圾回归、类型安全检查、代码安全检查等。
+
+	平台可移植性。由于C#的底层平台是运行时，而不是底层操作系统，所以针对不同的操作系统开发对应的运行时或者开发一个多系统通用的运行时，就可以达到一套C#代码在不同平台下运行，实现平台可移植性。
+						原文链接：https://blog.csdn.net/u013244147/article/details/104348503
+
+2.	c#的struct是值传递  class和string是引用传递    
+	值传递是在栈中开空间，引用传递是堆中
+
+3.	类是引用类型，struct(结构)是值类型。   相当于 变量枚举表，用类的方式操作  	enum是常量枚举的表
+	struct不支持继承。
+	struct不能声明默认构造函数(无参构造函数)。
+	{   
+		/////////////////详细说明/////////////////
+		结构可带有方法、字段、索引、属性、运算符方法和事件。
+		结构可定义构造函数，但不能定义析构函数。但是，您不能为结构定义无参构造函数。无参构造函数(默认)是自动定义的，且不能被改变。
+		与类不同，结构不能继承其他的结构或类。
+		结构不能作为其他结构或类的基础结构。
+		结构可实现一个或多个接口。
+		结构成员不能指定为 abstract、virtual 或 protected。
+		当您使用 New 操作符创建一个结构对象时，会调用适当的构造函数来创建结构。与类不同，结构可以不使用 New 操作符即可被实例化。
+		如果不使用New操作符，只有在所有的字段都被初始化之后，字段才被赋值，对象才被使用
+
+		1.结构体中声明的字段无法赋予初值，类可以;;;
+		2.结构体的构造函数中，必须为结构体所有字段赋值，类的构造函数无此限制;
+	}
+
+4.  static可以声明成员变量为静态，可直接用类名调用。
+	静态成员函数里只能访问静态成员变量
+
+5.  c#不支持多重继承，但可以用继承多个interface的方式来实现
+
+6.  静态多态性：1.函数重载(靠参数的个数或类型)  2.运算符重载
+
+7.	1.类   		可以有成员和函数
+	2.抽象类 	有抽象方法或抽象属性的类一定是抽象类，抽象类中的属性或方法不一定都是抽象的。如果子类没有全部override基类的抽象部分, 那么子类必须是抽象类。
+	3.接口    	所有方法都必须为抽象，不能实现。
+	{
+		抽象类和接口
+	    相同点：
+	    (1) 都可以被继承
+	    (2) 都不能被实例化
+	    (3) 都可以包含方法声明
+	    (4) 派生类必须实现未实现的方法
+	    区 别：
+	    (1) 抽象基类可以定义字段、属性、方法实现。接口只能定义属性、索引器、事件、和方法声明，不能包含字段。
+	    (2) 抽象类是一个不完整的类，需要进一步细化，而接口是一个行为规范。微软的自定义接口总是后带able字段，证明其是表述一类“我能做。。。”
+	    (3) 接口可以被多重实现，抽象类只能被单一继承
+	    (4) 抽象类更多的是定义在一系列紧密相关的类间，而接口大多数是关系疏松但都实现某一功能的类中
+	    (5) 抽象类是从一系列相关对象中抽象出来的概念， 因此反映的是事物的内部共性；接口是为了满足外部调用而定义的一个功能约定， 因此反映的是事物的外部特性
+	    (6) 接口基本上不具备继承的任何具体特点,它仅仅承诺了能够调用的方法    
+	    (7) 接口可以用于支持回调,而继承并不具备这个特点
+	    (8) 抽象类实现的具体方法默认为虚的，但实现接口的类中的接口方法却默认为非虚的，当然您也可以声明为虚的 
+	    (9) 如果抽象类实现接口，则可以把接口中方法映射到抽象类中作为抽象方法而不必实现，而在抽象类的子类中实现接口中方法
+	}
+
+8. 	
+	#if()
+	#elif()
+	#else
+	#endif
+	和普通的控制语句（if等）功能类似，方便在于预处理器指令包含的未执行部分是不需要编译的
+
+9. 匿名方法是通过使用 delegate 关键字创建委托实例来声明的
+	delegate void NumberChanger(int n);
+	NumberChanger nc = delegate(int x)
+	{
+	    Console.WriteLine("Anonymous Method: {0}", x);
+	};
+
+
+10. 泛型
+	public class MyGenericArray<T>
+    {
+        private T[] array;
+        public MyGenericArray(int size)
+        {
+            array = new T[size + 1];
+        }
+        public T getItem(int index)
+        {
+            return array[index];
+        }
+        public void setItem(int index, T value)
+        {
+            array[index] = value;
+        }
+    }
+           
+    class Tester
+    {
+        static void Main(string[] args)
+        {
+            // 声明一个整型数组
+            MyGenericArray<int> intArray = new MyGenericArray<int>(5);
+            // 设置值
+            for (int c = 0; c < 5; c++)
+            {
+                intArray.setItem(c, c*5);
+            }
+            // 获取值
+            for (int c = 0; c < 5; c++)
+            {
+                Console.Write(intArray.getItem(c) + " ");
+            }
+            Console.WriteLine();
+            // 声明一个字符数组
+            MyGenericArray<char> charArray = new MyGenericArray<char>(5);
+            // 设置值
+            for (int c = 0; c < 5; c++)
+            {
+                charArray.setItem(c, (char)(c+97));
+            }
+            // 获取值
+            for (int c = 0; c < 5; c++)
+            {
+                Console.Write(charArray.getItem(c) + " ");
+            }
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+    }
+
+    泛型委托
+    delegate T NumberChanger<T>(T n);
+	namespace GenericDelegateAppl
+	{
+	    class TestDelegate
+	    {
+	        static int num = 10;
+	        public static int AddNum(int p)
+	        {
+	            num += p;
+	            return num;
+	        }
+
+	        public static int MultNum(int q)
+	        {
+	            num *= q;
+	            return num;
+	        }
+	        public static int getNum()
+	        {
+	            return num;
+	        }
+
+	        static void Main(string[] args)
+	        {
+	            // 创建委托实例
+	            NumberChanger<int> nc1 = new NumberChanger<int>(AddNum);
+	            NumberChanger<int> nc2 = new NumberChanger<int>(MultNum);
+	        }
+		}
+	}
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   
   
